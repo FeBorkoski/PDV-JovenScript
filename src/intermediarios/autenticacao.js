@@ -22,7 +22,7 @@ const verificarToken = async (req, res, next) => {
       return res.status(401).json({ messagem: "Precisa de autorização."})
     }
 
-    req.user = user
+    req.usuario = user
 
     next()
   } catch (error) {
