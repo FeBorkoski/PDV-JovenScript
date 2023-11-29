@@ -1,3 +1,4 @@
+require('dotenv').config()
 const knex = require('../conexao')
 const jwt = require("jsonwebtoken");
 
@@ -27,7 +28,7 @@ const verificarToken = async (req, res, next) => {
     next()
   } catch (error) {
     console.log(error.message);
-    return res.status(500);
+    return res.status(500).json({ mensagem: "Erro interno"});
   }
 };
 
