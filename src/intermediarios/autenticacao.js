@@ -1,5 +1,5 @@
-require('dotenv').config()
-const knex = require('../conexao')
+require("dotenv").config();
+const knex = require("../conexao");
 const jwt = require("jsonwebtoken");
 
 const verificarToken = async (req, res, next) => {
@@ -20,18 +20,18 @@ const verificarToken = async (req, res, next) => {
       .first();
 
     if (!user || user.length === 0) {
-      return res.status(401).json({ messagem: "Precisa de autorização."})
+      return res.status(401).json({ messagem: "Precisa de autorização." });
     }
 
-    req.usuario = user
+    req.usuario = user;
 
-    next()
+    next();
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json({ mensagem: "Erro interno"});
+    return res.status(500).json({ mensagem: "Erro interno" });
   }
 };
 
 module.exports = {
-  verificarToken
-}
+  verificarToken,
+};
