@@ -12,7 +12,7 @@ const verificarToken = async (req, res, next) => {
   try {
     const token = authorization.replace("Bearer ", "").trim();
 
-    const { id } = jwt.decode(token, process.env.SENHA_JWT);
+    const { id } = jwt.verify(token, process.env.SENHA_JWT);
 
     const user = await knex("usuarios")
       .select(["id", "nome", "email"])
@@ -27,7 +27,6 @@ const verificarToken = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log(error.message);
     return res.status(500).json({ mensagem: "Erro interno" });
   }
 };
