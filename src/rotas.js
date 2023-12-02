@@ -11,6 +11,7 @@ const {
   verificarCamposLogin,
   validarCampos,
 } = require("./intermediarios/validacao");
+
 const login = require("./controladores/login");
 const { verificarToken } = require("./intermediarios/autenticacao");
 
@@ -24,6 +25,7 @@ const rotas = express();
 rotas.post("/produto", validarCampos(schemaProduto), produto.cadastrarProduto);
 rotas.put("/produto/:id", validarCampos(schemaProduto), produto.editarProduto);
 rotas.get("/categoria", listarCategorias);
+rotas.get("/produto/:id", produto.listarProdutos)
 
 rotas.post("/usuario", validarCampos(schemaUsuario), cadastrar);
 rotas.post("/login", verificarCamposLogin, login);
@@ -32,3 +34,6 @@ rotas.get("/usuario", detalharUsuario);
 rotas.put("/usuario", validarCampos(schemaUsuario), atualizar);
 
 module.exports = rotas;
+
+
+
