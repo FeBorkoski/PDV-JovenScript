@@ -68,8 +68,8 @@ const editarProduto = async (req, res) => {
 
 const listarProdutos = async (req, res) => {
   try {
-    if (req.query.categoria_id) {
-      const categoriaId = parseInt(req.query.categoria_id);
+    if (req.params.categoria_id) { 
+      const categoriaId = parseInt(req.params.categoria_id);
 
       const categoriaExistente = await knex('categorias').where({ id: categoriaId }).first();
 
