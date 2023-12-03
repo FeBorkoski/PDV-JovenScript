@@ -1,3 +1,4 @@
+const { number } = require("joi");
 const knex = require("../conexao");
 
 const cadastrarProduto = async (req, res) => {
@@ -84,13 +85,29 @@ const listarProdutos = async (req, res) => {
       return res.json(produtos);
     }
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ mensagem: 'Erro interno do servidor' });
   }
 };
 
+const detalharProduto = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const produto = await knex("produtos").where({ id }).first();
+
+    if (!produto) {
+      return res.status(404).json({ mensagem: "Produto não encontrado" });
+    }
+
+    return res.status(200).json(produto);
+  } catch (error) {
+    return res.status(500).json({ mensagem: "Erro interno do servidor" });
+}
+};
+
 
 module.exports = {
+  detalharProduto,
   cadastrarProduto,
   editarProduto,
   listarProdutos,

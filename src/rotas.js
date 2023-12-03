@@ -26,6 +26,7 @@ rotas.post("/produto", validarCampos(schemaProduto), produto.cadastrarProduto);
 rotas.put("/produto/:id", validarCampos(schemaProduto), produto.editarProduto);
 rotas.get("/categoria", listarCategorias);
 rotas.get("/produto/:categoria_id?", produto.listarProdutos)
+rotas.get("/produto/:id", produto.detalharProduto)
 
 rotas.post("/usuario", validarCampos(schemaUsuario), cadastrar);
 rotas.post("/login", verificarCamposLogin, login);
