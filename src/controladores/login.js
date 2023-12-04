@@ -2,7 +2,7 @@ require('dotenv').config()
 const knex = require('../conexao')
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const SENHA_JWT = require('../senha_JWT')
+
 
 const login = async (req, res) => {
   const { email, senha } = req.body;
@@ -20,7 +20,7 @@ const login = async (req, res) => {
       return res.status(400).json({ messagem: "Email e/ou senha invalido." });
     }
 
-    const token = jwt.sign({ id: user.id }, "senha", {
+    const token = jwt.sign({ id: user.id }, 'senha', {
       expiresIn: "2h",
     });
 

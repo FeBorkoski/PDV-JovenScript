@@ -21,14 +21,17 @@ const schemaProduto = require("./schemas/schemaProdutos");
 
 const rotas = express();
 
-rotas.post("/produto", validarCampos(schemaProduto), produto.cadastrarProduto);
-rotas.put("/produto/:id", validarCampos(schemaProduto), produto.editarProduto);
+
 rotas.get("/categoria", listarCategorias);
 
 rotas.post("/usuario", validarCampos(schemaUsuario), cadastrar);
 rotas.post("/login", verificarCamposLogin, login);
+
 rotas.use(verificarToken);
 rotas.get("/usuario", detalharUsuario);
 rotas.put("/usuario", validarCampos(schemaUsuario), atualizar);
+rotas.post("/produto", validarCampos(schemaProduto), produto.cadastrarProduto);
+rotas.put("/produto/:id", validarCampos(schemaProduto), produto.editarProduto);
+
 
 module.exports = rotas;
