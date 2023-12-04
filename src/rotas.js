@@ -20,6 +20,7 @@ const {
   editarProduto,
   listarProdutos,
   detalharProduto,
+  excluirProduto,
 } = require("./controladores/produtos");
 
 const schemaUsuario = require("./schemas/usuario");
@@ -40,5 +41,6 @@ rotas.post("/produto", validarCampos(schemaProduto), cadastrarProduto);
 rotas.put("/produto/:id", validarCampos(schemaProduto), editarProduto);
 rotas.get("/produto", listarProdutos);
 rotas.get("/produto/:id", detalharProduto);
+rotas.delete("/produto/:id", excluirProduto);
 
 module.exports = rotas;

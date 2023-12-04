@@ -72,19 +72,19 @@ const listarProdutos = async (req, res) => {
   try {
     const produtos = await knex("produtos").select("*");
 
-    if(categoriaId || categoriaId === 0){
-      if(categoriaId > 0 && categoriaId < 10){
+    if (categoriaId || categoriaId === 0) {
+      if (categoriaId > 0 && categoriaId < 10) {
         const produtosFiltrados = produtos.filter((produto) => {
-          return produto.categoria_id === categoriaId
-        })
-        return res.status(200).json(produtosFiltrados)
+          return produto.categoria_id === categoriaId;
+        });
+        return res.status(200).json(produtosFiltrados);
       } else {
-        return res.status(404).json({ mensagem: "Categoria inexistente."})
+        return res.status(404).json({ mensagem: "Categoria inexistente." });
       }
     }
-    return res.status(200).json(produtos)
+    return res.status(200).json(produtos);
   } catch (error) {
-    return res.status(500).json({ mensagem: 'Erro interno do servidor' });
+    return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
 };
 
@@ -100,8 +100,26 @@ const detalharProduto = async (req, res) => {
 
     return res.status(200).json(produto);
   } catch (error) {
-    return res.status(500).json({ mensagem: "Erro interno do servidor" });
-}
+    return res.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
+};
+
+const excluirProduto = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const produto = await knex("produtos").where({ id }).first();
+
+    if (!produto) {
+      return res.status(404).json({ mensagem: "Produto não encontrado" });
+    }
+
+    await knex("produtos").delete().where({ id })
+
+    return res.status(204).json();
+  } catch (error) {
+    return res.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
 };
 
 module.exports = {
@@ -109,4 +127,5 @@ module.exports = {
   cadastrarProduto,
   editarProduto,
   listarProdutos,
+  excluirProduto
 };
