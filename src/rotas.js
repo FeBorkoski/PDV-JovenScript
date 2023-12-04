@@ -14,7 +14,7 @@ const { verificarToken } = require("./intermediarios/autenticacao");
 const schemaUsuario = require("./schemas/usuario");
 const schemaCliente = require("./schemas/cliente");
 
-const { cadastrarCliente } = require("./controladores/cliente");
+const { cadastrarCliente, editarCliente } = require("./controladores/clientes");
 
 
 const rotas = express();
@@ -28,5 +28,6 @@ rotas.get("/usuario", detalharUsuario);
 rotas.put("/usuario", validarCampos(schemaUsuario), atualizar);
 
 rotas.post("/cliente", validarCampos(schemaCliente), cadastrarCliente);
+rotas.put("/cliente/:id", validarCampos(schemaCliente), editarCliente);
 
 module.exports = rotas;
