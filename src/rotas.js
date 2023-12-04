@@ -19,6 +19,7 @@ const {
   cadastrarProduto,
   editarProduto,
   listarProdutos,
+  detalharProduto,
 } = require("./controladores/produtos");
 
 const schemaUsuario = require("./schemas/usuario");
@@ -38,5 +39,6 @@ rotas.put("/usuario", validarCampos(schemaUsuario), atualizar);
 rotas.post("/produto", validarCampos(schemaProduto), cadastrarProduto);
 rotas.put("/produto/:id", validarCampos(schemaProduto), editarProduto);
 rotas.get("/produto", listarProdutos);
+rotas.get("/produto/:id", detalharProduto);
 
 module.exports = rotas;
