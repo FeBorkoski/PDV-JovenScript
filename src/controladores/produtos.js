@@ -65,7 +65,31 @@ const editarProduto = async (req, res) => {
   }
 };
 
+const listarProdutos = async (req, res) => {
+  const categoriaId = parseInt(req.query.categoria_id);
+
+  try {
+    const produtos = await knex("produtos").select("*");
+
+    if(categoriaId || categoriaId === 0){
+      if(categoriaId > 0 && categoriaId < 10){
+        const produtosFiltrados = produtos.filter((produto) => {
+          return produto.categoria_id === categoriaId
+        })
+        return res.status(200).json(produtosFiltrados)
+      } else {
+        return res.status(404).json({ mensagem: "Categoria inexistente."})
+      }
+    }
+    return res.status(200).json(produtos)
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
+};
+
 module.exports = {
   cadastrarProduto,
   editarProduto,
+  listarProdutos,
 };
