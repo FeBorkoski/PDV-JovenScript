@@ -1,7 +1,7 @@
 require("dotenv").config();
 const knex = require("../conexao");
 const jwt = require("jsonwebtoken");
-
+const senha_jwt = process.env.SENHA_JWT
 
 const verificarToken = async (req, res, next) => {
   const { authorization } = req.headers;
@@ -13,7 +13,7 @@ const verificarToken = async (req, res, next) => {
   try {
     const token = authorization.replace("Bearer ", "").trim();
 
-    const { id } = jwt.decode(token, "senha");
+    const { id } = jwt.decode(token, senha_jwt);
 
     const user = await knex("usuarios")
       .select(["id", "nome", "email"])
