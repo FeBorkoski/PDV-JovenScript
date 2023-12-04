@@ -24,7 +24,7 @@ const {
 const schemaUsuario = require("./schemas/usuario");
 const schemaCliente = require("./schemas/cliente");
 
-const { cadastrarCliente } = require("./controladores/cliente");
+const { cadastrarCliente, editarCliente } = require("./controladores/clientes");
 
 const schemaProduto = require("./schemas/schemaProdutos");
 
@@ -43,5 +43,6 @@ rotas.get("/produto/:id", detalharProduto);
 rotas.delete("/produto/:id", excluirProduto);
 
 rotas.post("/cliente", validarCampos(schemaCliente), cadastrarCliente);
+rotas.put("/cliente/:id", validarCampos(schemaCliente), editarCliente);
 
 module.exports = rotas;
