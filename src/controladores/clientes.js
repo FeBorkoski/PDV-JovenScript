@@ -81,7 +81,7 @@ const editarCliente = async (req, res) => {
   }
 };
 
-const listarClientes = async (_req, res) => {
+const listarClientes = async (req, res) => {
   try {
     const clientes = await knex("clientes");
     return res.status(200).json(clientes);
