@@ -24,7 +24,12 @@ const {
 const schemaUsuario = require("./schemas/usuario");
 const schemaCliente = require("./schemas/cliente");
 
-const { cadastrarCliente, editarCliente } = require("./controladores/clientes");
+const {
+  cadastrarCliente,
+  editarCliente,
+  listarClientes,
+  detalharCliente,
+} = require("./controladores/clientes");
 
 const schemaProduto = require("./schemas/schemaProdutos");
 
@@ -33,7 +38,9 @@ const rotas = express();
 rotas.get("/categoria", listarCategorias);
 rotas.post("/usuario", validarCampos(schemaUsuario), cadastrar);
 rotas.post("/login", verificarCamposLogin, login);
+
 rotas.use(verificarToken);
+
 rotas.get("/usuario", detalharUsuario);
 rotas.put("/usuario", validarCampos(schemaUsuario), atualizar);
 rotas.post("/produto", validarCampos(schemaProduto), cadastrarProduto);
@@ -44,5 +51,7 @@ rotas.delete("/produto/:id", excluirProduto);
 
 rotas.post("/cliente", validarCampos(schemaCliente), cadastrarCliente);
 rotas.put("/cliente/:id", validarCampos(schemaCliente), editarCliente);
+rotas.get("/cliente", listarClientes);
+rotas.get("/cliente/:id", detalharCliente);
 
 module.exports = rotas;
