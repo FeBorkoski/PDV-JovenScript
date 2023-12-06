@@ -24,7 +24,7 @@ const cadastrarProduto = async (req, res) => {
       })
       .returning("*");
 
-    return res.status(201).json({ "Produto criado": novoProduto[0] });
+    return res.status(201).json(novoProduto[0]);
   } catch (error) {
     return res.status(500).json({ mensagem: error.message });
   }
