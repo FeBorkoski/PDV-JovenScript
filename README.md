@@ -178,7 +178,7 @@ Fazer deploy do projeto e disponibilizar a URL.
 ---
 
 <details>
-<summary>2ª Sprint</summary>
+<summary>2ª Sprint ok!</summary>
 <br>
 
 <details>
