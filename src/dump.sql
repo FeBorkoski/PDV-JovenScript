@@ -31,3 +31,22 @@ create table clientes (
   estado varchar(2)
 
 );
+
+create table pedidos (
+	id serial primary key,
+  cliente_id integer references clientes(id) not null,
+  observacao text,
+  valor_total  integer not null   
+);
+
+create table pedido_produtos (
+ id serial primary key, 
+  pedido_id integer references pedidos(id) not null,
+  produto_id integer references produtos(id) not null,
+  quantidade_produto integer not null,
+  valor_produto integer not null
+);
+
+alter table produtos add column imagem text; 
+
+alter table produtos rename imagem to produto_imagem
