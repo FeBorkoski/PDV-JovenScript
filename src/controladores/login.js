@@ -2,7 +2,7 @@ require('dotenv').config()
 const knex = require('../conexao')
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const senha_jwt = process.env.SENHA_JWT
+const senha_jwt = `{process.env.SENHA_JWT}`
 
 const login = async (req, res) => {
   const { email, senha } = req.body;

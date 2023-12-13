@@ -1,5 +1,6 @@
 const express = require("express");
 const listarCategorias = require("./controladores/listarCategorias");
+const listarPedidos = require("./controladores/listarPedidos")
 const {
   cadastrar,
   detalharUsuario,
@@ -57,5 +58,6 @@ rotas.get("/cliente", listarClientes);
 rotas.get("/cliente/:id", detalharCliente);
 
 rotas.post("/pedido", validarCampos(schemaPedidos), cadastrarPedido);
+rotas.get("/pedido/:id?", listarPedidos);
 
 module.exports = rotas;
