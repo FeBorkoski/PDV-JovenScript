@@ -1,10 +1,12 @@
 const express = require("express");
+const multer = require("./servicos/multer.js");
 const listarCategorias = require("./controladores/listarCategorias");
 const {
   cadastrar,
   detalharUsuario,
   atualizar,
 } = require("./controladores/usuarios");
+
 const {
   verificarCamposLogin,
   validarCampos,
@@ -45,8 +47,8 @@ rotas.use(verificarToken);
 
 rotas.get("/usuario", detalharUsuario);
 rotas.put("/usuario", validarCampos(schemaUsuario), atualizar);
-rotas.post("/produto", validarCampos(schemaProduto), cadastrarProduto);
-rotas.put("/produto/:id", validarCampos(schemaProduto), editarProduto);
+rotas.post("/produto", multer.single('produto_imagem'), validarCampos(schemaProduto), cadastrarProduto);
+rotas.put("/produto/:id", multer.single('produto_imagem'), validarCampos(schemaProduto), editarProduto);
 rotas.get("/produto", listarProdutos);
 rotas.get("/produto/:id", detalharProduto);
 rotas.delete("/produto/:id", excluirProduto);

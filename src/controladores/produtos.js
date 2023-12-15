@@ -1,8 +1,11 @@
 const { number } = require("joi");
 const knex = require("../conexao");
+const s3 = require("../servicos/s3.js")
 
 const cadastrarProduto = async (req, res) => {
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
+  const produto_imagem = req.file;
+  let urlImage;
 
   try {
     const categoriaExistente = await knex("categorias")
@@ -15,12 +18,24 @@ const cadastrarProduto = async (req, res) => {
       return res.status(404).json({ mensagem: "Categoria não existe" });
     }
 
+    if (produto_imagem) {
+      let imagemUpload = await s3.upload({
+        Bucket: process.env.BACKBLAZE_BUCKET,
+        Body: produto_imagem.buffer,
+        Key: `produtos/${produto_imagem.originalname}`,
+        ContentType: produto_imagem.mimetype
+      }).promise();
+
+      urlImage = imagemUpload.Location;
+    }
+
     const novoProduto = await knex("produtos")
       .insert({
         descricao: descricao.trim(),
         quantidade_estoque,
         valor,
         categoria_id,
+        produto_imagem: urlImage
       })
       .returning("*");
 
@@ -33,6 +48,9 @@ const cadastrarProduto = async (req, res) => {
 const editarProduto = async (req, res) => {
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
   const { id } = req.params;
+  const produto_imagem = req.file;
+  let urlImage;
+
   try {
     const produto = await knex("produtos").where({ id }).first();
 
@@ -50,12 +68,24 @@ const editarProduto = async (req, res) => {
       return res.status(404).json({ mensagem: "Categoria não existe" });
     }
 
+    if (produto_imagem) {
+      let imagemUpload = await s3.upload({
+        Bucket: process.env.BACKBLAZE_BUCKET,
+        Body: produto_imagem.buffer,
+        Key: `produtos/${produto_imagem.originalname}`,
+        ContentType: produto_imagem.mimetype
+      }).promise();
+
+      urlImage = imagemUpload.Location;
+    }
+
     const produtoAtualizado = await knex("produtos")
       .update({
         descricao,
         quantidade_estoque,
         valor,
         categoria_id,
+        produto_imagem: urlImage
       })
       .where({ id })
       .returning("*");
