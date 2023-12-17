@@ -108,13 +108,23 @@ const excluirProduto = async (req, res) => {
   const { id } = req.params;
 
   try {
+    const produtoEmPedido = await knex("pedido_produtos").where(
+      { produto_id: id }.first()
+    );
+
+    if (produtoEmPedido) {
+      return res
+        .status(400)
+        .json({ mensagem: "Não é possível excluir este produto!" });
+    }
+
     const produto = await knex("produtos").where({ id }).first();
 
     if (!produto) {
       return res.status(404).json({ mensagem: "Produto não encontrado" });
     }
 
-    await knex("produtos").delete().where({ id })
+    await knex("produtos").delete().where({ id });
 
     return res.status(204).json();
   } catch (error) {
@@ -127,5 +137,5 @@ module.exports = {
   cadastrarProduto,
   editarProduto,
   listarProdutos,
-  excluirProduto
+  excluirProduto,
 };
