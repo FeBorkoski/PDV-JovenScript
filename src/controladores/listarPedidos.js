@@ -19,11 +19,11 @@ const listarPedidos = async (req, res) => {
         .where({ id: cliente_id })
         .first();
 
-      if (!clienteExiste) {
+      if (!clienteExiste || clienteExiste.length === 0) {
         return res.status(404).json({ mensagem: "Cliente não encontrado" });
       }
 
-      query = query.where('pedidos.cliente_id', cliente_id);
+      query = query.where('pedidos.cliente_id','=', cliente_id);
     }
 
     const pedidos = await query;

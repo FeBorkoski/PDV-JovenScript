@@ -58,6 +58,6 @@ rotas.get("/cliente", listarClientes);
 rotas.get("/cliente/:id", detalharCliente);
 
 rotas.post("/pedido", validarCampos(schemaPedidos), cadastrarPedido);
-rotas.get("/pedido/:id?", listarPedidos);
+rotas.get("/pedido", listarPedidos);
 
 module.exports = rotas;
