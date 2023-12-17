@@ -109,8 +109,7 @@ const excluirProduto = async (req, res) => {
 
   try {
     const produtoEmPedido = await knex("pedido_produtos").where(
-      { produto_id: id }.first()
-    );
+      { produto_id: id }).first();
 
     if (produtoEmPedido) {
       return res
@@ -120,6 +119,7 @@ const excluirProduto = async (req, res) => {
 
     const produto = await knex("produtos").where({ id }).first();
 
+
     if (!produto) {
       return res.status(404).json({ mensagem: "Produto não encontrado" });
     }
@@ -128,6 +128,7 @@ const excluirProduto = async (req, res) => {
 
     return res.status(204).json();
   } catch (error) {
+    console.log(error.message)
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
 };
