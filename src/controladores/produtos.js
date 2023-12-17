@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { number } = require("joi");
 const knex = require("../conexao");
 const s3 = require("../servicos/s3.js")
@@ -90,7 +91,7 @@ const editarProduto = async (req, res) => {
       .where({ id })
       .returning("*");
 
-    return res.status(201).json({ "Produto atualizado": produtoAtualizado[0] });
+    return res.status(201).json(produtoAtualizado[0]);
   } catch (error) {
     return res.status(500).json({ mensagem: error.message });
   }
