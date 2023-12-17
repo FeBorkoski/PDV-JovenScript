@@ -40,6 +40,7 @@ const cadastrarProduto = async (req, res) => {
       })
       .returning("*");
 
+
     return res.status(201).json(novoProduto[0]);
   } catch (error) {
     return res.status(500).json({ mensagem: error.message });
@@ -150,12 +151,19 @@ const excluirProduto = async (req, res) => {
 
     const produto = await knex("produtos").where({ id }).first();
 
-
     if (!produto) {
       return res.status(404).json({ mensagem: "Produto não encontrado" });
     }
 
     await knex("produtos").delete().where({ id });
+
+    const index = produto.produto_imagem.indexOf('produtos')
+    const path = produto.produto_imagem.slice(index)
+
+    await s3.deleteObject({
+      Bucket: process.env.BACKBLAZE_BUCKET,
+      Key: path
+    }).promise()
 
     return res.status(204).json();
   } catch (error) {
