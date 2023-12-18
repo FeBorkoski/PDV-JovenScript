@@ -157,13 +157,15 @@ const excluirProduto = async (req, res) => {
 
     await knex("produtos").delete().where({ id });
 
-    const index = produto.produto_imagem.indexOf('produtos')
-    const path = produto.produto_imagem.slice(index)
-
-    await s3.deleteObject({
-      Bucket: process.env.BACKBLAZE_BUCKET,
-      Key: path
-    }).promise()
+    if(produto.produto_imagem){
+      const index = produto.produto_imagem.indexOf('produtos')
+      const path = produto.produto_imagem.slice(index)
+  
+      await s3.deleteObject({
+        Bucket: process.env.BACKBLAZE_BUCKET,
+        Key: path
+      }).promise()
+    }
 
     return res.status(204).json();
   } catch (error) {
